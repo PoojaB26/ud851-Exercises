@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
      * getSimpleName as that will greatly help to identify the location from which your logs are
      * being posted.
      */
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "TEST";
 
     /* Constant values for the names of each respective lifecycle callback */
     private static final String ON_CREATE = "onCreate";
@@ -46,21 +46,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLifecycleDisplay = (TextView) findViewById(R.id.tv_lifecycle_events_display);
-
-        // TODO (1) Use logAndAppend within onCreate
+        logAndAppend(ON_CREATE);
     }
 
-    // TODO (2) Override onStart, call super.onStart, and call logAndAppend with ON_START
+    @Override
+    protected void onStart() {
+        super.onStart();
+        logAndAppend(ON_START);
+    }
 
-    // TODO (3) Override onResume, call super.onResume, and call logAndAppend with ON_RESUME
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        logAndAppend(ON_RESTART);
+    }
 
-    // TODO (4) Override onPause, call super.onPause, and call logAndAppend with ON_PAUSE
+    @Override
+    protected void onStop() {
+        logAndAppend(ON_STOP);
+        super.onStop();
+    }
 
-    // TODO (5) Override onStop, call super.onStop, and call logAndAppend with ON_STOP
+    @Override
+    protected void onDestroy() {
+        logAndAppend(ON_DESTROY);
+        super.onDestroy();
+    }
 
-    // TODO (6) Override onRestart, call super.onRestart, and call logAndAppend with ON_RESTART
+    @Override
+    protected void onPause() {
+        logAndAppend(ON_PAUSE);
+        super.onPause();
+    }
 
-    // TODO (7) Override onDestroy, call super.onDestroy, and call logAndAppend with ON_DESTROY
+    @Override
+    protected void onResume() {
+        super.onResume();
+        logAndAppend(ON_RESUME);
+    }
+
 
     /**
      * Logs to the console and appends the lifecycle method name to the TextView so that you can
