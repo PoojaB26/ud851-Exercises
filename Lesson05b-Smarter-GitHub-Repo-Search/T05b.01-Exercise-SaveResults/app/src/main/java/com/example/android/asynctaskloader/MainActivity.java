@@ -33,9 +33,10 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a static final key to store the query's URL
-
+    private static final String URL_EXTRA = "extra";
     // TODO (2) Create a static final key to store the search's raw JSON
 
+    private static final String RAW_JSON = "results";
     private EditText mSearchBoxEditText;
 
     private TextView mUrlDisplayTextView;
@@ -60,6 +61,23 @@ public class MainActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         // TODO (9) If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
+        if(savedInstanceState != null)
+        {
+            String URL_TEXT = savedInstanceState.getString(URL_EXTRA);
+            mUrlDisplayTextView.setText(URL_TEXT);
+            mSearchResultsTextView.setText(savedInstanceState.getString(RAW_JSON));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String QUERY_URL = mUrlDisplayTextView.getText().toString();
+        outState.putString(URL_EXTRA, QUERY_URL);
+
+        String SEARCH_RESULTS = mSearchResultsTextView.getText().toString();
+        outState.putString(RAW_JSON, SEARCH_RESULTS);
     }
 
     /**
