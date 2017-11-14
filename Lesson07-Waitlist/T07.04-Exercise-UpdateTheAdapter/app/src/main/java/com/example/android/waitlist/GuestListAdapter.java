@@ -14,18 +14,16 @@ import com.example.android.waitlist.data.WaitlistContract;
 public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.GuestViewHolder> {
 
     private Context mContext;
-    // TODO (1) Replace the mCount with a Cursor field called mCursor
     private int mCount;
+    private Cursor mCursor;
 
     /**
      * Constructor using the context and the db cursor
      * @param context the calling context/activity
      */
-    // TODO (2) Modify the constructor to accept a cursor rather than an integer
-    public GuestListAdapter(Context context, int count) {
+    public GuestListAdapter(Context context, Cursor mCursor) {
         this.mContext = context;
-        // TODO (3) Set the local mCursor to be equal to cursor
-        mCount = count;
+        this.mCursor = mCursor;
     }
 
     @Override
@@ -38,21 +36,17 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
-        // TODO (5) Move the cursor to the passed in position, return if moveToPosition returns false
-
-        // TODO (6) Call getString on the cursor to get the guest's name
-
-        // TODO (7) Call getInt on the cursor to get the party size
-
-        // TODO (8) Set the holder's nameTextView text to the guest's name
-
-        // TODO (9) Set the holder's partySizeTextView text to the party size
-    }
+        if(!mCursor.moveToPosition(position))
+            return;
+        String name = mCursor.getString(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME));
+        int size = mCursor.getInt(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE));
+        holder.nameTextView.setText(name);
+        holder.partySizeTextView.setText(String.valueOf(size));
+          }
 
     @Override
     public int getItemCount() {
-        // TODO (4) Update the getItemCount to return the getCount of mCursor
-        return mCount;
+        return mCursor.getCount();
     }
 
 
